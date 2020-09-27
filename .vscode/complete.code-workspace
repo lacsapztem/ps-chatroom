@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"debug.javascript.usePreview": true,
+		"remote.WSL.fileWatcher.polling": true
+	}
+}

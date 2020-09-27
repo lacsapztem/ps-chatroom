@@ -1,0 +1,27 @@
+{
+  "name": "ps-chatroom",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build-dev" : "cd frontend && npm run build-dev",
+    "build" : "cd frontend && npm run build",
+    "start-server": "nodemon --inspect  ./bin/www",
+    "start": "(npm run build) && (npm run start-server)",
+    "debug": "(npm run build-dev) && (npm run start-server)"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "md5": "^2.3.0",
+    "morgan": "~1.9.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
