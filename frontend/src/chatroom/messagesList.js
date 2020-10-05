@@ -23,7 +23,7 @@ class MessagesList extends React.Component {
                             <h2 class="clearfix nb-connected" />
                             <ul id="message-box">
                                 {
-                                    this.props.messagesList.map(this.render_message )
+                                    this.props.messages.list.map(this.render_message )
                                 }
                             </ul>
                         </div>

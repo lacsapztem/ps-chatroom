@@ -1,8 +1,0 @@
-parcours de la liste des users pour affichege
-Gestion du nombre de connecté
-Gestion des deconnexions
-Verif du format des adresses mails
-Validation des infos de connexion
-Validation des message
-
-$('#message-to-send').focus()

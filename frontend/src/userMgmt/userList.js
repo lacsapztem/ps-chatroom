@@ -9,7 +9,6 @@ class UserList extends React.Component {
         super(props);
     }
 
-    
 
     render_user(user) {
         return (
@@ -19,12 +18,37 @@ class UserList extends React.Component {
         );
     }
 
+    render_connectedNumber(){
+        if(this.props.list.length<=1) {
+            return (
+                <p><span class="connectes">{this.props.list.length}</span> auditeur connecté</p>
+            )
+        } else {
+            return (
+                <p><span class="connectes">{this.props.list.length}</span> auditeurs connectés</p>
+            )
+        }
+    }
+
+    render_hiddenNumber(){
+        var nb=this.props.userCounter-this.props.list.length
+        if(nb<=1) {
+            return (
+                <p>(plus <span class="caches">{nb}</span> qui se cache)</p>
+            )
+        } else {
+            return (
+                <p>(plus <span class="caches">{nb}</span> qui se cachent)</p>
+            )
+        }
+    }
     render() {
+        console.log("Rendering userList",this.props.list)
         return (
             <div class="online">
                 <h2 class="nb-connected">
-                    <p><span class="connectes">1</span> auditeur connecté</p>
-                    <p>(plus <span class="caches">1</span> qui se cache)</p>
+                    {this.render_connectedNumber()}
+                    {this.render_hiddenNumber()}
                 </h2>
                 <ul id="members-list">
                     {

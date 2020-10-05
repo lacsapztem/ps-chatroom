@@ -17,7 +17,7 @@ class MessageInput extends React.Component {
     
     handleSubmit(event) {
         var data=this.state.value
-        this.props.emit_message(data);
+        this.props.messages.emit_message(data);
         this.setState({value: ""});
         event.preventDefault();
     }

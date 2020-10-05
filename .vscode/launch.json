@@ -10,7 +10,11 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceRoot}/frontend/src/",            
-            "breakOnLoad": true 
+            "breakOnLoad": true,
+            "userDataDir": false,
+            "runtimeArgs": [
+              "--profile-directory=Debug"
+            ] 
         },
         {
 
