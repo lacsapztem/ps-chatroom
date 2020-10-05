@@ -7,16 +7,19 @@
 * Validation des infos de connexion
 * Validation des message
 * ?include login dans chatroom.js backend?!
-* $('#message-to-send').focus()
 * modification des message
 * Auth twitter
 * Auth fb
 * gestion des images
 * recherche images sur twitter
 * Admin
+* gestion des mentions
+* Autocompletion
+* gestion du scroll des messages 
 
 ## Done
 * Gestion des deconnexions
+* $('#message-to-send').focus()
 
 ## Licence
 

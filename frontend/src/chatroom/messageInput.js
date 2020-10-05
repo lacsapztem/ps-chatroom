@@ -28,8 +28,11 @@ class MessageInput extends React.Component {
 
             <div  class="write" >
                 <form id="message-form" class={classes}  onSubmit={this.handleSubmit}>
-                    <input type="text" id="message-to-send"  class="newmsg" value={this.state.value} onChange={this.handleChange}/>
+                    <input type="text" placeholder="Poster un message" id="message-to-send" class="newmsg" value={this.state.value} onChange={this.handleChange}/>
                     <input type="submit" value='Envoyer' id="send-message" />
+                    <div>
+                        <span class="minitext">Posez vos questions avec la mention <b>@ps</b></span>
+                    </div>
                 </form>
             </div>
         )

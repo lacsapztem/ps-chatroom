@@ -79,6 +79,7 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
         this.setState(state=>{
             return {messages:state.messages.setUser(user)}
         })
+        document.getElementById("message-to-send").focus()
         console.log("connecté",this.state.messages)
 
     }
