@@ -1,4 +1,6 @@
-##TODO
+# Page de live de podcastscience V3
+
+## TODO
 
 *Remonter liste des messages dans index.js => pas de propagation de la liste des messages
 verifier la validité des donnes recu à la reception du message par le serveur
@@ -14,6 +16,6 @@ Validation des message
 
 $('#message-to-send').focus()
 
-##Licence
+## Licence
 
 BEERWARE
