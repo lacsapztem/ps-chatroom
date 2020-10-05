@@ -3,12 +3,20 @@
 ## TODO
 
 * verifier la validité des donnes recu à la reception du message par le serveur
-* Gestion des deconnexions
 * Verif du format des adresses mails
 * Validation des infos de connexion
 * Validation des message
 * ?include login dans chatroom.js backend?!
 * $('#message-to-send').focus()
+* modification des message
+* Auth twitter
+* Auth fb
+* gestion des images
+* recherche images sur twitter
+* Admin
+
+## Done
+* Gestion des deconnexions
 
 ## Licence
 
