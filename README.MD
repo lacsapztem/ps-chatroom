@@ -7,7 +7,7 @@ verifier la validité des donnes recu à la reception du message par le serveur
 *Lors de la connexion : envoyer liste de connectés et des messages
 *Gestion du nombre de cachés
 *(Gerer les accords pour le nombre de connectés/cachés)
-  * gerer la deconnexion d'un user connecté 
+  *gerer la deconnexion d'un user connecté 
 Gestion des deconnexions
 Verif du format des adresses mails
 Validation des infos de connexion
