@@ -16,6 +16,9 @@
 * gestion des mentions
 * Autocompletion
 * gestion du scroll des messages 
+* message d'annonce de connexion
+* alerte de mention
+* gerer les connexion et les utilisateurs connectés en tant qu'objets
 
 ## Done
 * Gestion des deconnexions

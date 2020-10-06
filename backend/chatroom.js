@@ -13,23 +13,32 @@ let pad2 = (val) => {
   }
 }
 
-
+ 
 class Chatroom{
   constructor(server) {
     this.userCounter=0;
     var communicator= (socket) => {
       this.userCounter++;
+      var connexionId = md5(socket.id+"@podcastscience")
       
-      console.log("New client connected : ",socket.id);
+      //console.log("New client connected : ",socket.id);
+      console.log("userList : ",this.userList);
+      console.log("New client connected : ",connexionId);
+
       this.chatroomNamespace.emit("Update userCounter",this.userCounter)
+
+
       socket.on("disconnect", () => {
         this.userCounter--;
-        this.userList = this.userList.filter( user=>{return (socket.id==user.socketId)?false:true })
-        this.chatroomNamespace.emit("Update userList",this.userList)
-        this.chatroomNamespace.emit("Update userCounter",this.userCounter)
-        console.log("Client disconnected : ",socket.id);
+        this.userList = this.userList.filter( user=>{
+            return connexionId!=user.id
+        })
+        this.chatroomNamespace.emit("Delete User",connexionId)
         
+        console.log("userList : ",this.userList);
+        console.log("Client disconnected : ",connexionId);
       });
+  
 
       var initData={
         userList: this.userList,
@@ -37,7 +46,6 @@ class Chatroom{
           return idx>=(msgs.length-10);
         }),
         userCounter: this.userCounter
-        
       }
       socket.emit("Hello",initData)
       
@@ -77,13 +85,13 @@ class Chatroom{
         let user={
           ...loginData,
           avatar : 'https://gravatar.com/avatar/' + md5(loginData.userId) + '?s=40',
-          socketId : socket.id
+          socketId : socket.id,
+          id : connexionId
         } 
         const {userId,socketId, ...userPublic} = user // Copie user sans le champs userid et socket id (potentiellement privées))
         socket.emit('authAck',user)
         this.userList.push(user) 
-        //this.chatroomNamespace.emit('new user',userPublic) 
-        this.chatroomNamespace.emit("Update userList",this.userList)
+        this.chatroomNamespace.emit('new user',userPublic) 
       });
     }
 

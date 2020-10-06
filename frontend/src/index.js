@@ -60,16 +60,27 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
                 return {messages:state.messages.receive_message(data)}
             })
         })
-        /*
+
+        this.state.socket.on("Delete User",(data)=>{
+            //recoit un id bizarre apres la 2eme deco...
+            var newList = this.state.userList.filter( user=>{
+                return (data==user.id)?false:true 
+            })
+            this.setState({userList:newList})
+            var newUserCounter=this.state.userCounter-1
+            this.setState({userCounter:newUserCounter})
+        })
+        
         this.state.socket.on("new user",this.addUser)
-        */
+        
     }
     
     identificationAcknoledgement(data){
         var user={
             userName : data.userName,    
             userId : data.userId,
-            avatar : data.avatar
+            avatar : data.avatar,
+            id : data.id
         }
         var newState= {
             connected:true,
@@ -87,7 +98,7 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
 
 
 
-/*
+
     
     addUser = (user)=>{ 
         console.log("ajout d'un user : ",user)
@@ -96,7 +107,7 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
         });
     }
 
-*/
+
 
 
     render() {
