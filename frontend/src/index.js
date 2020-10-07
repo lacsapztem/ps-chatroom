@@ -71,7 +71,12 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
             this.setState({userCounter:newUserCounter})
         })
         
-        this.state.socket.on("new user",this.addUser)
+        this.state.socket.on("new user",(user)=>{ 
+            console.log("ajout d'un user : ",user)
+            this.setState(state => {
+                return { userList:[...state.userList,user] }
+            });
+        })
         
     }
     
@@ -100,12 +105,6 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
 
 
     
-    addUser = (user)=>{ 
-        console.log("ajout d'un user : ",user)
-        this.setState(state => {
-            return { userList:[...state.userList,user] }
-        });
-    }
 
 
 

@@ -18,7 +18,8 @@
 * gestion du scroll des messages 
 * message d'annonce de connexion
 * alerte de mention
-* gerer les connexion et les utilisateurs connectés en tant qu'objets
+* gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
+* Notif en cas de changement de date
 
 ## Done
 * Gestion des deconnexions

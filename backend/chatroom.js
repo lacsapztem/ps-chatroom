@@ -5,14 +5,6 @@ const login = require("../backend/login.js");
 const md5 = require('md5');
 
 
-let pad2 = (val) => {
-  if (val < 10) {
-    return '0' + val;
-  } else {
-    return val;
-  }
-}
-
  
 class Chatroom{
   constructor(server) {
@@ -52,7 +44,6 @@ class Chatroom{
       //receptionne un message, le traite puis le broadcast
       //A voir si promise
       messageProcessor(socket,(msg) =>{
-        var d = new Date();
         if(typeof(msg.user) == "undefined") {
           var user = { 
             userName : "Anonyme",
@@ -68,11 +59,10 @@ class Chatroom{
         }
         var data = { 
           user,
+          type : 'message',
           id: md5(Date.now() + msg.user.userId), 
           message : msg.message,
-          h: pad2(d.getHours()),
-          m: pad2(d.getMinutes()),
-          s: pad2(d.getSeconds())
+          date : Date.now()
         };
         this.chatroomNamespace.emit("new message",data)
         this.messageList.push(data)
@@ -92,6 +82,14 @@ class Chatroom{
         socket.emit('authAck',user)
         this.userList.push(user) 
         this.chatroomNamespace.emit('new user',userPublic) 
+        //Envoie de la notif de l'arrivée d'un nouveau user
+        var data = { 
+          type : 'notif',
+          id: md5(Date.now() + user.userName), 
+          message : user.userName+" s'est connecté(e)",
+          date : Date.now()
+        };
+        this.chatroomNamespace.emit("new message",data)
       });
     }
 
