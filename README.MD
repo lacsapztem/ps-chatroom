@@ -18,13 +18,13 @@
 * gestion du scroll des messages 
 * alerte de mention
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
-* Notif en cas de changement de date
 * stockage en bdd
 
 ## Done
 * Gestion des deconnexions
 * $('#message-to-send').focus()
 * message d'annonce de connexions
+* Notif en cas de changement de date
 
 ## Licence
 

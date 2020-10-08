@@ -41,7 +41,9 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
             })
             
             this.setState(state=>{
-                return {messages:state.messages.setList(data.messages)}
+                return {messages:state.messages.setList(data.messages.map(msg=>{
+                    return {...msg,date:new Date(msg.dateStr)}
+                }))}
             })
 
             console.log("Hello",this.state.messages)
