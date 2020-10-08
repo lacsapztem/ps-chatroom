@@ -62,7 +62,7 @@ class Chatroom{
           type : 'message',
           id: md5(Date.now() + msg.user.userId), 
           message : msg.message,
-          date : Date.now()
+          dateStr : new Date
         };
         this.chatroomNamespace.emit("new message",data)
         this.messageList.push(data)
@@ -87,7 +87,7 @@ class Chatroom{
           type : 'notif',
           id: md5(Date.now() + user.userName), 
           message : user.userName+" s'est connecté(e)",
-          date : Date.now()
+          dateStr : new Date 
         };
         this.chatroomNamespace.emit("new message",data)
       });
