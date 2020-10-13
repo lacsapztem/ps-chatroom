@@ -91,8 +91,7 @@ class Chatroom{
         };
         this.chatroomNamespace.emit("new message",data)
       });
-    }
-
+    }  
 
 
 

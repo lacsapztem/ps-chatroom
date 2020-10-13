@@ -18,7 +18,14 @@ class Chatroom extends React.Component {
     render() {
         return (
             <div>
-                <MessagesList messages={this.props.messages} />
+            
+                <div id="onChat">   
+                    <div id="main" class="chatroom">   
+                        <div id="wrap_messages"    >
+                            <MessagesList messages={this.props.messages} />
+                        </div>
+                    </div>
+                </div>
                 <MessageInput messages={this.props.messages} connected={this.props.connected}/>
             </div>
         );

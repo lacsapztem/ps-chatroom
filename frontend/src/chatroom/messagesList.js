@@ -1,4 +1,7 @@
 import React from 'react';
+
+
+const isBrowser = typeof window !== `undefined`
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 let pad2 = (val) => {
@@ -9,8 +12,20 @@ let pad2 = (val) => {
     }
   }
   
-
+//$('#messages').prop('scrollHeight')<=($('#main').prop('scrollTop')+$('#main').height()+10)
 class MessagesList extends React.Component {
+    
+    constructor(props) {
+        super(props);
+        this.flag_scrollauto=true
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.flag_scrollauto)
+            document.getElementById("main").scrollTo(0,document.querySelector("#messages").scrollHeight)
+    }
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        this.flag_scrollauto=document.querySelector("#messages").scrollHeight<=(document.getElementById("main").scrollTop+document.getElementById("main").offsetHeight+10)
+    }
     render_date(d) {
         return (
             <li id={'date_{msg.date.toISOString()}'} class="message_me message_info ">
@@ -23,7 +38,7 @@ class MessagesList extends React.Component {
     render_notif(notif) {
         return (
             <li id={notif.id} class="message_me message_info ">
-                <p>
+                <p> 
                     <i>* {notif.message}</i>
                 </p>
             </li>
@@ -43,8 +58,6 @@ class MessagesList extends React.Component {
     }
     render_message =(msg) =>{
         var retval=[]
-        console.log("date "+typeof(msg.date)+":",msg.date)
-        
         var messageDate=msg.date.toLocaleDateString('fr-FR', options)
         if(this.date!=messageDate){
             this.date=messageDate
@@ -62,19 +75,13 @@ class MessagesList extends React.Component {
     render=()=> {
         this.date="00/00/0000"
         return (
-            <div id="onChat">   
-                <div id="main" class="chatroom">   
-                    <div id="wrap_messages"    >
-                        <div id="messages"    >
-                            <h2 class="clearfix nb-connected" />
-                            <ul id="message-box">
-                                {
-                                    this.props.messages.list.map(this.render_message )
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div id="messages"    >
+                <h2 class="clearfix nb-connected" />
+                <ul id="message-box">
+                    {
+                        this.props.messages.list.map(this.render_message )
+                    }
+                </ul>
             </div>
         ) 
     }
