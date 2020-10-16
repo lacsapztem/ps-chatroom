@@ -587,11 +587,6 @@
 		/*font-size: small;*/
 		word-wrap: break-word;
 	}
-	.message .mypseudo{
-		/*font-size: small;*/
-		color:#e41d3d;
-		font-weight: bolder;
-	}
 	.message_info{
 		font-size: small;
 		font-size: #555;
@@ -1280,3 +1275,49 @@
 		display: block;
 		opacity: 1;
 	}
+
+
+/*reactMentions*/
+.newmsg__control{
+	margin-top: 10px;
+	margin-bottom: 20px;
+  }
+  .newmsg__input{
+	background-color: #fff;
+	border-radius: 3px;
+	transition: 0.3s ease-in-out;
+	padding: 9px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333;
+	border: 1px solid #dedede;
+	&:focus,&:active{
+	  outline: none;
+	  border: 1px solid #3fb9de;
+	}
+	&::placeholder {
+	  color: #a4b0be;
+	  font-size: 14px;
+	}
+  }
+  .newmsg__highlighter{
+	padding: 5px;
+  }
+  .newmsg__suggestions__list {
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	font-size: 12px;
+	max-height: 200px;
+	overflow: auto;
+  }
+  .newmsg__suggestions__item {
+	padding: 2px 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .newmsg__suggestions__item--focused {
+	color: #E1E1E1;
+	background-color: #e41d3d;
+  }
+  .mention-tag {
+	font-weight: bolder;
+  }

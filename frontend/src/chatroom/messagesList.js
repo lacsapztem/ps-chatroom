@@ -12,7 +12,6 @@ let pad2 = (val) => {
     }
   }
   
-//$('#messages').prop('scrollHeight')<=($('#main').prop('scrollTop')+$('#main').height()+10)
 class MessagesList extends React.Component {
     
     constructor(props) {
@@ -39,7 +38,7 @@ class MessagesList extends React.Component {
         return (
             <li id={notif.id} class="message_me message_info ">
                 <p> 
-                    <i>* {notif.message}</i>
+                    <i dangerouslySetInnerHTML={{ __html: "* "+notif.message}}/>
                 </p>
             </li>
         )
@@ -51,7 +50,7 @@ class MessagesList extends React.Component {
                 <div class="message" >
                     <span class="pseudo">{msg.user.userName}</span>
                     <span class="timestamp">&nbsp;[{pad2(msg.date.getHours())}:{pad2(msg.date.getMinutes())}:{pad2(msg.date.getSeconds())}]</span>
-                    <p id="msg_{msg.id}" >{msg.message}</p>
+                    <p id="msg_{msg.id}" dangerouslySetInnerHTML={{__html:msg.message}}/>
                 </div>
             </li>
         )

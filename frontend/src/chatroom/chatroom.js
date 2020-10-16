@@ -22,11 +22,11 @@ class Chatroom extends React.Component {
                 <div id="onChat">   
                     <div id="main" class="chatroom">   
                         <div id="wrap_messages"    >
-                            <MessagesList messages={this.props.messages} />
+                            <MessagesList messages={this.props.messages}/>
                         </div>
                     </div>
                 </div>
-                <MessageInput messages={this.props.messages} connected={this.props.connected}/>
+                <MessageInput messages={this.props.messages} connected={this.props.connected} userList={this.props.userList}/>
             </div>
         );
     }

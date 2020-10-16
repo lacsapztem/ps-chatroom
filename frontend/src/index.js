@@ -54,7 +54,14 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
         })
         
         this.state.socket.on("Update userList",(data)=>{
-            this.setState({userList:data})
+            this.setState({
+                userList:data.map((u)=>{
+                    return {
+                        ...u,
+                        isMe : (u.id==this.state.user.id)
+                    }
+                })
+            })
         })
 
         this.state.socket.on("new message",(data)=>{
@@ -75,8 +82,12 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
         
         this.state.socket.on("new user",(user)=>{ 
             console.log("ajout d'un user : ",user)
+            var newUser={
+                ...user,
+                isMe : (user.id==this.state.user.id)
+            }
             this.setState(state => {
-                return { userList:[...state.userList,user] }
+                return { userList:[...state.userList,newUser] }
             });
         })
         
@@ -93,6 +104,10 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
             connected:true,
             user
         }
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = '.mention-'+(data.id)+' { color: red; }';
+        document.getElementsByTagName('head')[0].appendChild(style);
         this.setState(newState)
         this.setState(state=>{
             return {messages:state.messages.setUser(user)}
@@ -151,7 +166,7 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
                             </div>
                             
                         </div>
-                        <Chatroom socket={this.state.socket} connected={this.state.connected} addUser={this.addUser} user={this.state.user} messages={this.state.messages}/>
+                        <Chatroom socket={this.state.socket} connected={this.state.connected} addUser={this.addUser} user={this.state.user} messages={this.state.messages} userList={this.state.userList}/>
                         <UserList socket={this.state.socket} list={this.state.userList} userCounter={this.state.userCounter}/> 
                     </div>
                 </div>
