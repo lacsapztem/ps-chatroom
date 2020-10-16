@@ -17,7 +17,6 @@
 * alerte de mention 
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
 * stockage en bdd
-* gestion des deco/reco
 
 ## Done
 * Gestion des deconnexions
@@ -27,7 +26,8 @@
 * gestion du scroll des messages 
 * gestion des mentions https://medium.com/upshotly/implementing-using-react-mentions-from-react-to-database-and-vice-versa-657c936cfc42
    - sanitize : https://www.npmjs.com/package/dompurify
+* gestion des deco/reco => client recoit un Hello lors de la deco si deja auth : relancer auth
 
 ## Licence
 
-BEERWARE
+BEERWARE 

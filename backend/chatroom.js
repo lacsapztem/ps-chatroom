@@ -19,7 +19,7 @@ class Chatroom{
 
       this.chatroomNamespace.emit("Update userCounter",this.userCounter)
 
-
+ 
       socket.on("disconnect", () => {
         this.userCounter--;
         this.userList = this.userList.filter( user=>{
@@ -31,16 +31,16 @@ class Chatroom{
         console.log("Client disconnected : ",connexionId);
       });
   
-
+ 
       var initData={
         userList: this.userList,
         messages : this.messageList.filter( (msg,idx,msgs)=>{
-          return idx>=(msgs.length-10);
+          return idx>=(msgs.length-10); 
         }),
         userCounter: this.userCounter
       }
       socket.emit("Hello",initData)
-      
+    
       //receptionne un message, le traite puis le broadcast
       //A voir si promise
       messageProcessor(socket,(msg) =>{

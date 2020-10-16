@@ -35,6 +35,7 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
 
         
         this.state.socket.on("Hello",(data)=>{
+            console.log("Reception du Hello")
             this.setState({
                 userList:data.userList,
                 userCounter:data.userCounter
@@ -45,7 +46,12 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
                     return {...msg,date:new Date(msg.dateStr)}
                 }))}
             })
-
+            if(this.state.connected){
+                this.state.socket.emit('login',{
+                    userName : this.state.user.userName,
+                    userId : this.state.user.userId
+                })
+            }
             console.log("Hello",this.state.messages)
         })
 

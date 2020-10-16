@@ -12,7 +12,7 @@ messageProcessor = (socket,broadcastMessage)=>{
             message:DOMPurify.sanitize(msg.message)};
         console.log("message:",processedMessage.message)
         broadcastMessage(processedMessage);
-    });
+    }); 
 }
 
 
