@@ -50,7 +50,7 @@ class MessagesList extends React.Component {
                 <div class="message" >
                     <span class="pseudo">{msg.user.userName}</span>
                     <span class="timestamp">&nbsp;[{pad2(msg.date.getHours())}:{pad2(msg.date.getMinutes())}:{pad2(msg.date.getSeconds())}]</span>
-                    <p id="msg_{msg.id}" dangerouslySetInnerHTML={{__html:msg.message}}/>
+                    <p id="msg_{msg.id}" dangerouslySetInnerHTML={{__html:msg.htmlMessage}}/>
                 </div>
             </li>
         )

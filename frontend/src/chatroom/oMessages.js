@@ -21,7 +21,7 @@ class Messages {
     }
 
     receive_message = (msg,cbAlert)=>{
-        cbAlert(msg.message) 
+        cbAlert(msg) 
         this.list=[...this.list,{
             ...msg,
             date: new Date(msg.dateStr)

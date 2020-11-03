@@ -16,6 +16,8 @@
 * Autocompletion
 * alerte de mention 
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
+  - tri de la liste de recherche du plus long au plus court
+  - gestion des " "
 * stockage en bdd
 
 ## Done

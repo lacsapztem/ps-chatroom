@@ -5,24 +5,28 @@ import Messages from './chatroom/oMessages';
 
 //React Componenent
 import Chatroom from './chatroom/chatroom.js';
-import IdentificationForm from './userMgmt/form.js';
 import UserList from './userMgmt/userList.js';
+import AlertActivatorButton from './chatroom/alertActivatorButton.js';
+import IdentificationForm from './userMgmt/form.js';
+
 
 
 
 const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
-
+/*
 window.addEventListener('load', function () {
-    Notification.requestPermission(function (status) {
+    Notification.requestPermission().then( (status) => {
         // Cela permet d'utiliser Notification.permission avec Chrome/Safari
         if (Notification.permission !== status) {
             Notification.permission = status;
         }
     });
-});
+})
+*/
 
   // ========================================
 
+  
   class App extends React.Component {
     constructor(props) {
         const socket = socketIOClient(SOCKET_IO_URL)
@@ -36,6 +40,7 @@ window.addEventListener('load', function () {
             },
             userList:[],
             userCounter:0,
+            bNotifs: (window.Notification && Notification.permission === "granted"),
             messages:new Messages(socket)
         };
         this.identificationAcknoledgement = this.identificationAcknoledgement.bind(this);
@@ -78,16 +83,22 @@ window.addEventListener('load', function () {
         })
 
         this.state.socket.on("new message",(data)=>{
-            this.setState(state=>{
-                return {messages:state.messages.receive_message(data,(msg)=>{
-                    if(msg.indexOf('<span class="mention-tag mention-'+(this.state.user.id)+'">')>1){
+            var cbNewMessage = (msg)=>{
+                msg.mentionnedUsers.forEach(id=> {
+                    if(id==this.state.user.id){
                         console.log('Nouveau message pour moi !')
-                        if (window.Notification && Notification.permission === "granted") {
-                            var n = new Notification("Podcastscience",{body:msg,icon:'images/PodcastScience300.png'});
+                        if (window.Notification && Notification.permission === "granted" && this.state.bNotifs) {
+                            var n = new Notification(msg.user.userName+" vous a mentionné(e)",{
+                                body:msg.textMessage,
+                                image:'images/PodcastScience.png',
+                                icon:msg.user.avatar
+                            });
                         }
-                      
                     }
-                })}
+                })
+            }
+            this.setState(state=>{
+                return {messages:state.messages.receive_message(data,cbNewMessage)}
             })
         })
 
@@ -138,6 +149,9 @@ window.addEventListener('load', function () {
 
     }
      
+    updateNotifsState = (value) => {
+        this.setState({bNotifs:value})
+    }
 
 
 
@@ -162,6 +176,7 @@ window.addEventListener('load', function () {
                         </a>
                         <h1 id="title-episode"/>
                         <div class="rec">Live</div>
+                        <AlertActivatorButton bNotifs={this.state.bNotifs} updateNotifsState={this.updateNotifsState}/>
                     </div>
                 </header>
                 

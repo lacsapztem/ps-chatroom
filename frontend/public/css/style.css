@@ -5,17 +5,68 @@
 	 * @author: Maxime Siméon
 	 */
 	 
-
-	@font-face {
+	 @font-face {
 		font-family: 'icomoon';
-		src:url('../fonts/icomoon.eot');
-		src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-			url('../fonts/icomoon.ttf') format('truetype'),
-			url('../fonts/icomoon.woff') format('woff'),
-			url('../fonts/icomoon.svg#icomoon') format('svg');
+		src:  url('/fonts/icomoon.eot?b63lmf');
+		src:  url('/fonts/icomoon.eot?b63lmf#iefix') format('embedded-opentype'),
+		  url('/fonts/icomoon.ttf?b63lmf') format('truetype'),
+		  url('/fonts/icomoon.woff?b63lmf') format('woff'),
+		  url('/fonts/icomoon.svg?b63lmf#icomoon') format('svg');
 		font-weight: normal;
 		font-style: normal;
-	}
+		font-display: block;
+	  }
+	  
+	  [class^="icon-"], [class*=" icon-"] {
+		/* use !important to prevent issues with browser extensions that change fonts */
+		font-family: 'icomoon' !important;
+		color: #e41d3d;
+		speak: never;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+	  
+		/* Better Font Rendering =========== */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	  }
+	  
+	  .icon-facebookmoon:before {
+		content: "\e600";
+	  }
+	  .icon-twittermoon:before {
+		content: "\e601";
+	  }
+	  .icon-sharemoon:before {
+		content: "\e603";
+	  }
+	  .icon-playmoon:before {
+		content: "\e604";
+	  }
+	  .icon-pausemoon:before {
+		content: "\e605";
+	  }
+	  .icon-uniE606:before {
+		content: "\e606";
+	  }
+	  .icon-speakeronmoon:before {
+		content: "\e607";
+	  }
+	  .icon-speakeroffmoon:before {
+		content: "\e608";
+	  }
+	  .icon-bubblemoon:before {
+		content: "\e96b";
+	  }
+	  .icon-bubble2moon:before {
+		content: "\e96e";
+	  }
+	  .icon-xmoon:before {
+		content: "\e900";
+	  }
+	  
 	/* ----------------------------- */
 	/* == Reset */
 	/* ----------------------------- */
@@ -256,6 +307,12 @@
 		-moz-user-select: none; /* For Mozilla */
 		-o-user-select: none;
 		user-select: none; /* Default */
+	}
+
+	.mention_alert {
+		float: right;
+		margin-top: 1.4em;
+		padding: .4em;
 	}
 
 	/* ----------------------------- */
@@ -1321,3 +1378,30 @@
   .mention-tag {
 	font-weight: bolder;
   }
+
+
+
+  /* Mise en forme des infobulles*/
+  .tooltip {
+  position: relative;  /* les .infobulle deviennent référents */
+  cursor: help;
+}
+
+/* on génère un élément :after lors du survol et du focus :*/
+
+.tooltip:hover::after,
+.tooltip:focus::after {
+	content: attr(aria-label);  /* on affiche aria-label */
+	font-family: "Open Sans", helvetica, arial, sans-serif;
+	font-size: small;
+	position: absolute;
+	color:#e41d3d;
+	padding: 0.3em;
+	background-color : #fcfcfc;
+	border: 1px solid #e1e1e1;
+	box-shadow: -1px 0 #e1e1e1, 1px 0 0 #E1E1E1;
+	left: 50%;
+	transform: translateX(-50%) translateY(80%); 
+	z-index: 1; /* pour s'afficher au dessus des éléments en position relative */
+	white-space: nowrap;  /* on interdit le retour à la ligne */
+}

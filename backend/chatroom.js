@@ -43,7 +43,7 @@ class Chatroom{
     
       //receptionne un message, le traite puis le broadcast
       //A voir si promise
-      messageProcessor(socket,(msg) =>{
+      messageProcessor(socket,this.userList,(msg) =>{
         if(typeof(msg.user) == "undefined") {
           var user = { 
             userName : "Anonyme",
@@ -62,6 +62,9 @@ class Chatroom{
           type : 'message',
           id: md5(Date.now() + msg.user.userId), 
           message : msg.message,
+          htmlMessage : msg.htmlMessage,
+          textMessage : msg.textMessage,
+          mentionnedUsers : msg.mentionnedUsers,
           dateStr : new Date
         };
         this.chatroomNamespace.emit("new message",data)
@@ -87,7 +90,8 @@ class Chatroom{
           type : 'notif',
           id: md5(Date.now() + user.userName), 
           message : user.userName+" s'est connecté(e)",
-          dateStr : new Date 
+          dateStr : new Date ,
+          mentionnedUsers : []
         };
         this.chatroomNamespace.emit("new message",data)
       });

@@ -38,21 +38,22 @@ class MessageInput extends React.Component {
                     <MentionsInput 
                     placeholder="Poster un message" 
                     id="message-to-send" 
-                    singleLine="true" 
-                    allowSpaceInQuery="true"
-                    allowSuggestionsAboveCursor="true"
+                    singleLine={true}
+                    allowSpaceInQuery={true}
+                    allowSuggestionsAboveCursor={true}
                     class="newmsg" 
                     className="newmsg"
+                    autocomplete="off"
                     value={this.state.value} 
                     onChange={this.handleChange}
                     >
                         <Mention
-                        trigger="@"
                         data={autocompleteList}
-                        markup='<span class="mention-tag mention-__id__">__display__</span>'
-                        appendSpaceOnAdd="true"    
+                        //markup='@__display__'//'<span class="mention-tag mention-__id__">__display__</span>'
+                        appendSpaceOnAdd={true}    
                         style={{backgroundColor: '#fcfcfc'}}
                         displayTransform={(id,display)=>{return '@'+display}}
+                        //regex={/@([@].+)/}
                         />
                     </MentionsInput>
                     <input type="submit" value='Envoyer' id="send-message" />
@@ -65,6 +66,7 @@ class MessageInput extends React.Component {
     }
 }
 
+//trigger="@"
 
 
 export default MessageInput;
