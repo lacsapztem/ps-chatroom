@@ -20,7 +20,8 @@ class Messages {
         this.socket.emit("new message", data) 
     }
 
-    receive_message = (msg)=>{ 
+    receive_message = (msg,cbAlert)=>{
+        cbAlert(msg.message) 
         this.list=[...this.list,{
             ...msg,
             date: new Date(msg.dateStr)

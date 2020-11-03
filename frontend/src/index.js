@@ -12,7 +12,14 @@ import UserList from './userMgmt/userList.js';
 
 const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
 
-
+window.addEventListener('load', function () {
+    Notification.requestPermission(function (status) {
+        // Cela permet d'utiliser Notification.permission avec Chrome/Safari
+        if (Notification.permission !== status) {
+            Notification.permission = status;
+        }
+    });
+});
 
   // ========================================
 
@@ -72,7 +79,15 @@ const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
 
         this.state.socket.on("new message",(data)=>{
             this.setState(state=>{
-                return {messages:state.messages.receive_message(data)}
+                return {messages:state.messages.receive_message(data,(msg)=>{
+                    if(msg.indexOf('<span class="mention-tag mention-'+(this.state.user.id)+'">')>1){
+                        console.log('Nouveau message pour moi !')
+                        if (window.Notification && Notification.permission === "granted") {
+                            var n = new Notification("Podcastscience",{body:msg,icon:'images/PodcastScience300.png'});
+                        }
+                      
+                    }
+                })}
             })
         })
 
