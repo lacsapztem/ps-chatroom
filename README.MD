@@ -2,22 +2,18 @@
 
 ## TODO
 
-* verifier la validité des donnes recu à la reception du message par le serveur
+* verifier la validité des donnees recu à la reception du message par le serveur
 * Verif du format des adresses mails
 * Validation des infos de connexion
 * Validation des message
 * ?include login dans chatroom.js backend?!
-* modification des messages
-* Auth twitter
+* modification des messages (apres stockage en bdd)
+* Auth twitter (branche AuthTwitter)
 * Auth fb
-* gestion des images => dans le chat ou en exposé
-* recherche images sur twitter
+* gestion des images => dans le chat ou en exposé  (apres stockage en bdd)
+* recherche images sur twitter (apres stockage en bdd)
 * Admin
-* Autocompletion
-* alerte de mention 
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
-  - tri de la liste de recherche du plus long au plus court
-  - gestion des " "
 * stockage en bdd
 
 ## Done
@@ -29,6 +25,8 @@
 * gestion des mentions https://medium.com/upshotly/implementing-using-react-mentions-from-react-to-database-and-vice-versa-657c936cfc42
    - sanitize : https://www.npmjs.com/package/dompurify
 * gestion des deco/reco => client recoit un Hello lors de la deco si deja auth : relancer auth
+* Autocompletion
+* alerte de mention 
 
 ## Licence
 

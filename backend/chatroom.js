@@ -3,12 +3,16 @@ const socketIo = require("socket.io");
 const messageProcessor = require("../backend/messageProcessor.js");
 const login = require("../backend/login.js");
 const md5 = require('md5');
+import TwitterAuth from './auth/twitter.js'
 
 
  
 class Chatroom{
   constructor(server) {
     this.userCounter=0;
+    this.authenticator={
+      twitter=new TwitterAuth();
+    }
     var communicator= (socket) => {
       this.userCounter++;
       var connexionId = md5(socket.id+"@podcastscience")
@@ -20,16 +24,6 @@ class Chatroom{
       this.chatroomNamespace.emit("Update userCounter",this.userCounter)
 
  
-      socket.on("disconnect", () => {
-        this.userCounter--;
-        this.userList = this.userList.filter( user=>{
-            return connexionId!=user.id
-        })
-        this.chatroomNamespace.emit("Delete User",connexionId)
-        
-        console.log("userList : ",this.userList);
-        console.log("Client disconnected : ",connexionId);
-      });
   
  
       var initData={
@@ -95,6 +89,20 @@ class Chatroom{
         };
         this.chatroomNamespace.emit("new message",data)
       });
+      
+      socket.on("disconnect", () => {
+        this.userCounter--;
+        this.userList = this.userList.filter( user=>{
+            return connexionId!=user.id
+        })
+        this.chatroomNamespace.emit("Delete User",connexionId)
+        
+        console.log("userList : ",this.userList);
+        console.log("Client disconnected : ",connexionId);
+      });
+
+
+      
     }  
 
 
