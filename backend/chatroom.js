@@ -1,39 +1,27 @@
 
-const socketIo = require("socket.io");
-const messageProcessor = require("../backend/messageProcessor.js");
-const login = require("../backend/login.js");
-const md5 = require('md5');
-
-
+import socketIo from 'socket.io'
+import messageProcessor from '../backend/messageProcessor.js'
+import md5 from 'md5'
+import {UserList} from  './cnxMgmt/userlist.js'
  
-class Chatroom{
+export class Chatroom{
   constructor(server) {
     this.userCounter=0;
+
+
+    
     var communicator= (socket) => {
-      this.userCounter++;
+      this.userCounter++; 
       var connexionId = md5(socket.id+"@podcastscience")
       
-      //console.log("New client connected : ",socket.id);
-      console.log("userList : ",this.userList);
       console.log("New client connected : ",connexionId);
 
       this.chatroomNamespace.emit("Update userCounter",this.userCounter)
-
- 
-      socket.on("disconnect", () => {
-        this.userCounter--;
-        this.userList = this.userList.filter( user=>{
-            return connexionId!=user.id
-        })
-        this.chatroomNamespace.emit("Delete User",connexionId)
-        
-        console.log("userList : ",this.userList);
-        console.log("Client disconnected : ",connexionId);
-      });
+    
   
- 
+      //initialise les données clients
       var initData={
-        userList: this.userList,
+        userList: this.userList.getList(),
         messages : this.messageList.filter( (msg,idx,msgs)=>{
           return idx>=(msgs.length-10); 
         }),
@@ -41,64 +29,32 @@ class Chatroom{
       }
       socket.emit("Hello",initData)
     
+
+
+
       //receptionne un message, le traite puis le broadcast
-      //A voir si promise
-      messageProcessor(socket,this.userList,(msg) =>{
-        if(typeof(msg.user) == "undefined") {
-          var user = { 
-            userName : "Anonyme",
-            avatar : ""
-          }
-        }
-        else
-        {
-          var user = { 
-            userName : msg.user.userName,
-            avatar : msg.user.avatar
-          }
-        }
-        var data = { 
-          user,
-          type : 'message',
-          id: md5(Date.now() + msg.user.userId), 
-          message : msg.message,
-          htmlMessage : msg.htmlMessage,
-          textMessage : msg.textMessage,
-          mentionnedUsers : msg.mentionnedUsers,
-          dateStr : new Date
-        };
-        this.chatroomNamespace.emit("new message",data)
-        this.messageList.push(data)
-        console.log("message:",data);
-      }) 
+      socket.on("new message",(msg)=>{
+        messageProcessor(this.userList,msg,(processedMessage) =>{
+          this.chatroomNamespace.emit("new message",processedMessage)
+          this.messageList.push(processedMessage)
+        }) 
+      });
 
 
 
-      socket.on("login",(loginData)=>{
-        let user={
-          ...loginData,
-          avatar : 'https://gravatar.com/avatar/' + md5(loginData.userId) + '?s=40',
-          socketId : socket.id,
-          id : connexionId
-        } 
-        const {userId,socketId, ...userPublic} = user // Copie user sans le champs userid et socket id (potentiellement privées))
-        socket.emit('authAck',user)
-        this.userList.push(user) 
-        this.chatroomNamespace.emit('new user',userPublic) 
-        //Envoie de la notif de l'arrivée d'un nouveau user
-        var data = { 
-          type : 'notif',
-          id: md5(Date.now() + user.userName), 
-          message : user.userName+" s'est connecté(e)",
-          dateStr : new Date ,
-          mentionnedUsers : []
-        };
-        this.chatroomNamespace.emit("new message",data)
+
+
+      socket.on("login",(logindata)=>{
+        this.userList.login(logindata,connexionId,socket)
+      });
+      
+
+
+      socket.on("disconnect", () => {
+        this.userCounter--;
+        this.userList.disconnect(connexionId);
       });
     }  
-
-
-
 
 
 
@@ -107,9 +63,9 @@ class Chatroom{
     this.io = socketIo(server);
     this.chatroomNamespace = this.io.of('/chatroom');
     this.chatroomNamespace.on("connection",communicator);
-    this.userList=[]
+    this.userList=new UserList(this.chatroomNamespace);
     this.messageList=[]
-    //console.log("this:",this)
+
 
 
 
@@ -122,5 +78,3 @@ class Chatroom{
 
 
 }
-
-module.exports =  Chatroom; 

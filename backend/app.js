@@ -1,20 +1,20 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const { log } = require('console');
+import express from 'express'
+import path from 'path'
+import cookieParser from "cookie-parser";
+import morgan from 'morgan'
 
 var app = express();
+const __dirname = path.resolve(path.dirname(''));
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname,"..", "frontend", "build")));
+app.use(express.static(path.join(__dirname, "frontend", "build")));
 
 app.get('/test', (req, res) => 
     res.send('Hello, World!')
 )
 
-module.exports = app;
-console.log("départ")
+export default app;
+console.log("départ",__dirname)

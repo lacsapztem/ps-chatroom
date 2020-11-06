@@ -8,7 +8,7 @@
 * Validation des message
 * ?include login dans chatroom.js backend?!
 * modification des messages
-* Auth twitter
+* Auth twitter (branche existante)
 * Auth fb
 * gestion des images => dans le chat ou en exposé
 * recherche images sur twitter
@@ -16,8 +16,6 @@
 * Autocompletion
 * alerte de mention 
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
-  - tri de la liste de recherche du plus long au plus court
-  - gestion des " "
 * stockage en bdd
 
 ## Done

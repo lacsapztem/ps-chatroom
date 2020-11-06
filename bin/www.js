@@ -4,11 +4,15 @@
  * Module dependencies.
  * 
  */
-
-var app = require('../backend/app');
-var debug = require('debug')('ps-chatroom:server');
-var http = require('http');
-const Chatroom = require("../backend/chatroom.js")
+import app from '../backend/app.js';
+import http from 'http'
+import {Chatroom} from '../backend/chatroom.js'
+import Debug from "debug";
+const debug = Debug('ps-chatroom:server');
+//var app = require('../backend/app');
+//var debug = require('debug')('ps-chatroom:server');
+//var http = require('http');
+//const Chatroom = require("../backend/chatroom.js")
 
 /**
  * Get port from environment and store in Express.
@@ -22,7 +26,7 @@ app.set('view engine', 'html');
  */ 
 
 var server = http.createServer(app);
-chatroom = new Chatroom(server)
+var chatroom = new Chatroom(server)
 /**
  * Listen on provided port, on all network interfaces.
  */
