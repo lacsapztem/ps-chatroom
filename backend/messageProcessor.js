@@ -1,6 +1,8 @@
-const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
- 
+import  createDOMPurify from 'dompurify';
+import jsdom from 'jsdom';
+import md5 from 'md5'
+
+const {JSDOM} = jsdom;
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
@@ -16,7 +18,7 @@ const mentionsProcessor = (inputMessage,userList)=>
         accumulator[currentValue.id]=currentValue.userName
         return accumulator
     }
-    var idIndexedUserList = userList.reduce(reducer ,[]) 
+    var idIndexedUserList = userList.getList().reduce(reducer ,[]) 
     var outputMessage={
         ...inputMessage,
         htmlMessage :inputMessage.message.replace(regexUserID,(correspondance, pUserName /*p1*/, pUserId /*p2*/, decalage, input) => {
@@ -37,30 +39,43 @@ const mentionsProcessor = (inputMessage,userList)=>
     return outputMessage;
 }
 
-messageProcessor = (socket,userList,broadcastMessage)=>{
-    socket.on("new message",(msg)=>{
+const messageProcessor = (userList,msg,cbBroadcastMessage)=>{
         //sanitization du message
-        // Doit être le premier traitement
-        processedMessage={
+        var processedMessage={
             ...msg,
-            message:DOMPurify.sanitize(msg.message)};
-
-
+            message:DOMPurify.sanitize(msg.message)
+        };
+        
+        //traitement du message
         processedMessage=mentionsProcessor(processedMessage,userList);
-        /*
-        //Remplace les code des mentions par les noms d'utilisateurs trié par longueur décroissante
-        processedMessage=userList.sort(comparator).reduce(reducer,{
-            ...msg,
-            textMessage:msg.message, 
-            htmlMessage:msg.message,
-            mentionnedUsers : []
-        })
-        */
 
-        console.log("processed message:",processedMessage )
-        broadcastMessage(processedMessage);
-    }); 
+
+        //verifications et construction de la structure à envoyer
+        // La création d'un nouvel objet permet d'éviter la propagation de donnée ajouté en amont
+        if(typeof(processedMessage.user) == "undefined") {
+            var user = { 
+              userName : "Anonyme",
+              avatar : ""
+            }
+        } else { 
+            var user = { 
+                userName : processedMessage.user.userName,
+                avatar : processedMessage.user.avatar
+            }
+        }
+        var data = { 
+            user,
+            type : 'message',
+            id: md5(Date.now() + processedMessage.user.userId), 
+            message : processedMessage.message,
+            htmlMessage : processedMessage.htmlMessage,
+            textMessage : processedMessage.textMessage,
+            mentionnedUsers : processedMessage.mentionnedUsers,
+            dateStr : new Date
+        };
+
+        console.log("processed message:",data )
+        cbBroadcastMessage(data);
 }
 
-
-module.exports =  messageProcessor; 
+export default messageProcessor

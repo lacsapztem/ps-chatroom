@@ -2,10 +2,11 @@
   "name": "ps-chatroom",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build-dev": "cd frontend && npm run build-dev",
     "build": "cd frontend && npm run build",
-    "start-server": "nodemon --inspect  ./bin/www",
+    "start-server": "nodemon --inspect  ./bin/www.js",
     "start": "(npm run build) && (npm run start-server)",
     "debug": "(npm run build-dev) && (npm run start-server)"
   },
