@@ -2,9 +2,7 @@ import React from 'react';
 
 
 class AlertActivatorButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
 
     handleClick = () => {
         if (window.Notification) {

@@ -15,6 +15,7 @@
 * Admin
 * gerer les connexion et les utilisateurs connectés en tant qu'objets coté serveur ?
 * stockage en bdd
+* https
 
 ## Done
 * Gestion des deconnexions

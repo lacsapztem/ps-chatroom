@@ -39,6 +39,11 @@ class IdentificationForm extends React.Component {
         event.preventDefault();
     }
 
+    launchTwitterAuth=(event)=>{
+        this.props.socket.emit('twitter_auth')
+        //event.preventDefault();
+    }
+
 
     render() {
         const classes = this.props.connected ? 'login clearfix fade_hide' : 'login clearfix fade_visible'
@@ -53,7 +58,7 @@ class IdentificationForm extends React.Component {
                     <input type="text" name="login" placeholder="Nom d'utilisateur" id="username"  onChange={this.handleUserNameChange}/>
                     <input type="text" name="mail" placeholder="E-mail" id="mail"  onChange={this.handleUserIdChange}/>
                     <input type="submit" value="Discuter"/>
-                    <a id="twitter_auth_link"><img src="images/sign-in-with-twitter-link.png"/></a>
+                    <a id="twitter_auth_link" onClick={this.launchTwitterAuth}><img src="images/sign-in-with-twitter-link.png"/></a>
                 </form>
             </div>
         );

@@ -12,7 +12,7 @@ import IdentificationForm from './userMgmt/form.js';
 
 
 
-const SOCKET_IO_URL = "http://127.0.0.1:3000/chatroom";
+const SOCKET_IO_URL = "/chatroom";
 /*
 window.addEventListener('load', function () {
     Notification.requestPermission().then( (status) => {
@@ -53,15 +53,27 @@ window.addEventListener('load', function () {
                 userCounter:data.userCounter
             })
             
-            this.setState(state=>{
-                return {messages:state.messages.setList(data.messages.map(msg=>{
-                    return {...msg,date:new Date(msg.dateStr)}
-                }))}
-            })
             if(this.state.connected){
-                this.state.socket.emit('login',{
-                    userName : this.state.user.userName,
-                    userId : this.state.user.userId
+                console.log("demande de reconnexion :",this.state.user.type)
+                switch(this.state.user.type) {
+                    case 'twitter' : {
+                        console.log("demande de reconnexion twitter")
+                        this.state.socket.emit('twitter_auth'); 
+                        break;
+                    }
+                    default : this.state.socket.emit('login',{
+                        userName : this.state.user.userName,
+                        userId : this.state.user.userId
+                    })
+                    
+                }
+            }
+            else
+            {
+                this.setState(state=>{
+                    return {messages:state.messages.setList(data.messages.map(msg=>{
+                        return {...msg,date:new Date(msg.dateStr)}
+                    }))}
                 })
             }
             console.log("Hello",this.state.messages)
@@ -122,7 +134,11 @@ window.addEventListener('load', function () {
                 return { userList:[...state.userList,newUser] }
             });
         })
+
         
+        
+        //permet d'ouvrir un popup, notamment pour un authentificaction externe (twitter/fb)
+        this.state.socket.on('openurl',(url) => {window.open(url,'Auth','menubar=no, scrollbars=no')})
     }
     
     identificationAcknoledgement(data){
@@ -130,7 +146,8 @@ window.addEventListener('load', function () {
             userName : data.userName,    
             userId : data.userId,
             avatar : data.avatar,
-            id : data.id
+            id : data.id,
+            type: data.type
         }
         var newState= {
             connected:true,

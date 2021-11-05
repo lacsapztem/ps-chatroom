@@ -1,7 +1,6 @@
 import React from 'react';
 
 
-const isBrowser = typeof window !== `undefined`
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 let pad2 = (val) => {
@@ -58,7 +57,7 @@ class MessagesList extends React.Component {
     render_message =(msg) =>{
         var retval=[]
         var messageDate=msg.date.toLocaleDateString('fr-FR', options)
-        if(this.date!=messageDate){
+        if(this.date!==messageDate){
             this.date=messageDate
             retval.push(this.render_date(msg.date))
         }

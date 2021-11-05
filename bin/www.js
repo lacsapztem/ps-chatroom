@@ -18,7 +18,7 @@ const debug = Debug('ps-chatroom:server');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 app.set('view engine', 'html');
 /**
@@ -27,6 +27,7 @@ app.set('view engine', 'html');
 
 var server = http.createServer(app);
 var chatroom = new Chatroom(server)
+app.get("/twitter_auth",chatroom.cbTwitterAuth)
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -34,7 +35,6 @@ var chatroom = new Chatroom(server)
 server.listen(port);
 server.on('error', onError) ;
 server.on('listening', onListening);
-
 
 
 /**

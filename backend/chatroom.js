@@ -3,13 +3,13 @@ import socketIo from 'socket.io'
 import messageProcessor from '../backend/messageProcessor.js'
 import md5 from 'md5'
 import {UserList} from  './cnxMgmt/userlist.js'
-import TwitterAuth from './auth/twitter.js'
+import {TwitterAuth} from './cnxMgmt/auth/twitter.js'
  
 export class Chatroom{
   constructor(server) {
     this.userCounter=0;
     this.authenticator={
-      twitter=new TwitterAuth();
+      twitter:new TwitterAuth()
     }
     var communicator= (socket) => {
       this.userCounter++; 
@@ -44,17 +44,25 @@ export class Chatroom{
 
 
 
+      console.log("init de messages ");
 
       socket.on("login",(logindata)=>{
         this.userList.login(logindata,connexionId,socket)
       });
       
-
+      socket.on("twitter_auth", () => {
+        console.log("demande de cnx twitter")
+        this.authenticator.twitter.get_auth(socket,connexionId)
+      });
 
       socket.on("disconnect", () => {
         this.userCounter--;
         this.userList.disconnect(connexionId);
       });
+
+      
+
+
     }  
 
 
@@ -63,7 +71,10 @@ export class Chatroom{
 
     this.io = socketIo(server);
     this.chatroomNamespace = this.io.of('/chatroom');
-    this.chatroomNamespace.on("connection",communicator);
+    this.chatroomNamespace.on("connection",(socket)=>{
+      console.log("nouvelle connexion")
+      communicator(socket)
+    });
     this.userList=new UserList(this.chatroomNamespace);
     this.messageList=[]
 
@@ -73,6 +84,13 @@ export class Chatroom{
 
 
 
+  }
+
+  cbTwitterAuth = (res,req)=> { 
+    //console.log('cbTwitterAuth',req)
+    this.authenticator.twitter.get_auth_step2(res.res,req.req,(userData,connexionId,socket)=>{
+      console.log(userData)
+      this.userList.connectUser(userData,connexionId,socket,'twitter')})
   }
 
   

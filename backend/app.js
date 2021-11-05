@@ -16,5 +16,8 @@ app.get('/test', (req, res) =>
     res.send('Hello, World!')
 )
 
+app.get('/close', (req, res) => 
+  res.send('<script>window.close()</script>')
+)
 export default app;
 console.log("départ",__dirname)
